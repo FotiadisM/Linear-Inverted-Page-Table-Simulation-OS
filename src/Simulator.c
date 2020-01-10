@@ -8,6 +8,7 @@ int Simulator_run(char* algorithm, int frames, int quantum, int maxReferences) {
     int currReferences = 0;
     int currQuantum = 0;
     bool toggleFiles = false;
+    int (*function)();
     FILE *filePtr1 = NULL, *filePtr2 = NULL;
     AddressPtr address = NULL;
     InvertedPageTablePtr invertedPageTable = NULL;
@@ -30,9 +31,19 @@ int Simulator_run(char* algorithm, int frames, int quantum, int maxReferences) {
         return -1;
     }
 
+    if(!strcmp(algorithm, "LRU")) {
+        function = LRU_run;
+    }
+    else if(!strcmp(algorithm, "WS")) {
+        function = WS_run;
+    }
+    else {
+        printf("Unknown replacment algorithm %s\n", algorithm);
+        return -1;
+    }
+
     while((address = Simulator_getAddress(filePtr1, filePtr2, &currReferences, maxReferences, &currQuantum, quantum, &toggleFiles)) != NULL) {
-        printf("%ld, %10ld, %d\n", address->pid, address->pageNumber, address->dirty);
-        free(address);
+        function(&invertedPageTable, &address);
     }
 
     fclose(filePtr1);
@@ -82,7 +93,7 @@ Address *Simulator_getAddress(FILE *filePtr1, FILE *filePtr2, int *currReference
         address->pid = 1;
     }
 
-    Address_getInfo(&address, line);
+    Address_setInfo(&address, line);
 
     free(line);
 

@@ -2,6 +2,7 @@
 #define SIMULATOR_H
 
 #include "./InvertedPageTable.h"
+#include "./replacmentAlgorithms.h"
 
 int Simulator_run(char* algorithm, int frames, int quantum, int maxReferences);
 

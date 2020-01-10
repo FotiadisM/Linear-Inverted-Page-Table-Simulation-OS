@@ -2,7 +2,6 @@
 #include <string.h>
 
 #include "../include/Simulator.h"
-#include "../include/defines.h"
 
 int main(int argc, char* argv[]) {
 
@@ -11,7 +10,7 @@ int main(int argc, char* argv[]) {
         return -1;
     }
 
-    char *algorithm;
+    char *algorithm = NULL;
     int quantum = 0;
     int frames = 0;
     int maxReferences = -1;
@@ -27,7 +26,7 @@ int main(int argc, char* argv[]) {
             maxReferences = atoi(argv[++i]);
         }
         else if(!strcmp(argv[i], "-a")) {
-            i++;    // argv[++i] doesn't seem to work
+            i++;    // malloc(sizeof(argv[++i])) doesn't seem to work
             if((algorithm = malloc(sizeof(argv[i]))) == NULL) {
                 perror("malloc failed");
                 return -1;
@@ -36,7 +35,10 @@ int main(int argc, char* argv[]) {
         }
     }
 
-    Simulator_run(algorithm, frames, quantum, maxReferences);
+    if(Simulator_run(algorithm, frames, quantum, maxReferences) == -1) {
+        perror("Error occurred, program terminated");
+        return -1;
+    }
 
     free(algorithm);
 

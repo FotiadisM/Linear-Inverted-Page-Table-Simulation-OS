@@ -9,10 +9,10 @@ SDIR = src
 
 EXECUTABLE = runner
 
-_DEPS = Address.h InvertedPageTable.h Simulator.h defines.h
+_DEPS = Address.h InvertedPageTable.h Simulator.h replacmentAlgorithms.h defines.h
 DEPS = $(patsubst %,$(IDIR)/%,$(_DEPS))
 
-_OBJ = main.o Address.o InvertedPageTable.o Simulator.o
+_OBJ = main.o Address.o InvertedPageTable.o Simulator.o replacmentAlgorithms.o
 OBJ = $(patsubst %,$(ODIR)/%,$(_OBJ))
 
 $(ODIR)/%.o: $(SDIR)/%.c $(DEPS)

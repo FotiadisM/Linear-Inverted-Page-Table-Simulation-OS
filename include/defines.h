@@ -1,6 +1,6 @@
 #ifndef DEFINES_H
 #define DEFINES_H
 
-#define BUFFER_SIZE 12
+#define FRAME_SIZE 4096
 
 #endif

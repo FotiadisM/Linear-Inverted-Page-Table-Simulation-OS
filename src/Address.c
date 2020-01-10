@@ -2,7 +2,7 @@
 #include <string.h>
 #include "../include/Address.h"
 
-int Address_getInfo(AddressPtr *address, char* info) {
+int Address_setInfo(AddressPtr *address, char* info) {
 
     char *token, *operation;
 
@@ -18,8 +18,14 @@ int Address_getInfo(AddressPtr *address, char* info) {
         (*address)->dirty = false;
     }
 
-    // printf("%s\t%s\n", token, operation);
-    // printf("%ld\n", strtoul(token, NULL, 16));
+    return 0;
+}
+
+int Address_equals(AddressPtr address1, AddressPtr address2) {
+
+    if(address1->pid == address2->pid && address1->pageNumber == address2->pageNumber) {
+        return 1;
+    }
 
     return 0;
 }

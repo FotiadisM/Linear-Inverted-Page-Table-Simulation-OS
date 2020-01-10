@@ -12,6 +12,8 @@ typedef struct Address {
 
 typedef Address* AddressPtr;
 
-int Address_getInfo(AddressPtr *address, char* info);
+int Address_setInfo(AddressPtr *address, char* info);
+
+int Address_equals(AddressPtr address1, AddressPtr address2);
 
 #endif
