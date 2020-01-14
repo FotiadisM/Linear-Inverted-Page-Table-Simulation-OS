@@ -10,6 +10,9 @@ typedef struct InvertedPageTable {
 
 typedef InvertedPageTable* InvertedPageTablePtr;
 
-AddressPtr InvertedPageTable_getAddress(InvertedPageTablePtr invertedPagetable, size_t size, AddressPtr address);
+AddressPtr *InvertedPageTable_getAddress(InvertedPageTablePtr invertedPagetable, Address address);
+AddressPtr *InvertedPageTable_getFreeTrace(InvertedPageTablePtr invertedPagetable);
+
+void InvertedPageTable_print(InvertedPageTablePtr invertedPagetable);
 
 #endif

@@ -2,30 +2,34 @@
 #include <string.h>
 #include "../include/Address.h"
 
-int Address_setInfo(AddressPtr *address, char* info) {
+int Address_setInfo(AddressPtr address, char* info) {
 
     char *token, *operation;
 
     token = strtok(info, " ");
     operation = strtok(NULL, "\n");
 
-    (*address)->pageNumber = strtoul(token, NULL, 16);
+    address->pageNumber = strtoul(token, NULL, 16);
 
-    if(!strcmp(operation, "R")) {
-        (*address)->dirty = true;
+    if(!strcmp(operation, "W")) {
+        address->dirty = true;
     }
     else {
-        (*address)->dirty = false;
+        address->dirty = false;
     }
 
     return 0;
 }
 
-int Address_equals(AddressPtr address1, AddressPtr address2) {
+int Address_equals(Address address1, Address address2) {
 
-    if(address1->pid == address2->pid && address1->pageNumber == address2->pageNumber) {
+    if(address1.pid == address2.pid && address1.pageNumber == address2.pageNumber) {
         return 1;
     }
 
     return 0;
+}
+
+void Address_print(Address address) {
+    printf("pid: %ld, pageNumber: %ld, operation: %d\n", address.pid, address.pageNumber, address.dirty);
 }

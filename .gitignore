@@ -1,2 +1,2 @@
-./bin/runner
-./build/*.o
+bin/runner
+build/*.o

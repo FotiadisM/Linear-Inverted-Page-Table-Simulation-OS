@@ -22,6 +22,9 @@ int Simulator_run(char* algorithm, int frames, int quantum, int maxReferences) {
         perror("malloc failed");
         return -1;
     }
+    for(int i=0; i < invertedPageTable->size; i++) {
+        invertedPageTable->table[i] = NULL;
+    }
 
     filePtr1 = fopen("./Assets/bzip.trace", "r");
     filePtr2 = fopen("./Assets/gcc.trace", "r");
@@ -43,19 +46,24 @@ int Simulator_run(char* algorithm, int frames, int quantum, int maxReferences) {
     }
 
     while((address = Simulator_getAddress(filePtr1, filePtr2, &currReferences, maxReferences, &currQuantum, quantum, &toggleFiles)) != NULL) {
-        function(&invertedPageTable, &address);
+
+        function(invertedPageTable, address);
     }
+    InvertedPageTable_print(invertedPageTable);
 
     fclose(filePtr1);
     fclose(filePtr2);
 
+    for(int i=0; i < invertedPageTable->size; i++) {
+        free(invertedPageTable->table[i]);
+    }
     free(invertedPageTable->table);
     free(invertedPageTable);
 
     return 0;
 }
 
-Address *Simulator_getAddress(FILE *filePtr1, FILE *filePtr2, int *currReferences, int maxReferences, int *currQuantumm, int quantum, bool *togglefiles) {
+AddressPtr Simulator_getAddress(FILE *filePtr1, FILE *filePtr2, int *currReferences, int maxReferences, int *currQuantumm, int quantum, bool *togglefiles) {
 
     char* line = NULL;
     size_t len = 0;
@@ -93,7 +101,7 @@ Address *Simulator_getAddress(FILE *filePtr1, FILE *filePtr2, int *currReference
         address->pid = 1;
     }
 
-    Address_setInfo(&address, line);
+    Address_setInfo(address, line);
 
     free(line);
 

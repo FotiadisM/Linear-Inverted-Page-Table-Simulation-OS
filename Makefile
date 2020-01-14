@@ -24,7 +24,7 @@ $(BDIR)/$(EXECUTABLE): $(OBJ)
 .PHONY: clean run
 
 run:
-	./$(BDIR)/$(EXECUTABLE) -a LRU -f 100 -q 10 -m 10
+	./$(BDIR)/$(EXECUTABLE) -a LRU -f 12 -q 2 -m 6
 
 valgrind:
 	valgrind ./$(BDIR)/$(EXECUTABLE) -a LRU -f 100 -q 10 -m 10
