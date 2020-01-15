@@ -1,15 +1,17 @@
 #include <stdlib.h>
 #include <string.h>
+
 #include "../include/Address.h"
+#include "../include/defines.h"
 
 int Address_setInfo(AddressPtr address, char* info) {
 
-    char *token, *operation;
+    char *hex = NULL, *operation = NULL;
 
-    token = strtok(info, " ");
+    hex = strtok(info, " ");
     operation = strtok(NULL, "\n");
 
-    address->pageNumber = strtoul(token, NULL, 16);
+    address->pageNumber = strtoul(hex, NULL, 16) / FRAME_SIZE;
 
     if(!strcmp(operation, "W")) {
         address->dirty = true;
@@ -31,5 +33,5 @@ int Address_equals(Address address1, Address address2) {
 }
 
 void Address_print(Address address) {
-    printf("pid: %ld, pageNumber: %ld, operation: %d\n", address.pid, address.pageNumber, address.dirty);
+    printf("pid: %ld, pageNumber: %8ld, operation: %d\n", address.pid, address.pageNumber, address.dirty);
 }

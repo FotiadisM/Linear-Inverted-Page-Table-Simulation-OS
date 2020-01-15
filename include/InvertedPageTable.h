@@ -11,7 +11,7 @@ typedef struct InvertedPageTable {
 typedef InvertedPageTable* InvertedPageTablePtr;
 
 AddressPtr *InvertedPageTable_getAddress(InvertedPageTablePtr invertedPagetable, Address address);
-AddressPtr *InvertedPageTable_getFreeTrace(InvertedPageTablePtr invertedPagetable);
+AddressPtr *InvertedPageTable_getFreeFrame(InvertedPageTablePtr invertedPagetable);
 
 void InvertedPageTable_print(InvertedPageTablePtr invertedPagetable);
 

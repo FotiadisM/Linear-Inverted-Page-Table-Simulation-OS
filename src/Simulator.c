@@ -55,7 +55,9 @@ int Simulator_run(char* algorithm, int frames, int quantum, int maxReferences) {
     fclose(filePtr2);
 
     for(int i=0; i < invertedPageTable->size; i++) {
-        free(invertedPageTable->table[i]);
+        if(invertedPageTable->table[i] != NULL) {
+            free(invertedPageTable->table[i]);
+        }
     }
     free(invertedPageTable->table);
     free(invertedPageTable);

@@ -15,7 +15,7 @@ AddressPtr *InvertedPageTable_getAddress(InvertedPageTablePtr invertedPagetable,
     return NULL;
 }
 
-AddressPtr *InvertedPageTable_getFreeTrace(InvertedPageTablePtr invertedPagetable) {
+AddressPtr *InvertedPageTable_getFreeFrame(InvertedPageTablePtr invertedPagetable) {
 
     for(size_t i=0; i < invertedPagetable->size; i++) {
         if(invertedPagetable->table[i] == NULL) {
