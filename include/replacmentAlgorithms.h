@@ -2,11 +2,28 @@
 #define RPALGO_H
 
 #include "./InvertedPageTable.h"
+#include "../include/Queue.h"
 
-int LRU_run(InvertedPageTablePtr invertedPageTable, AddressPtr address);
+typedef struct LRU {
+    QueuePtr queue;
+} LRU;
+
+typedef struct WS
+{
+    /* data */
+} WS;
+
+typedef union Cashe {
+    LRU lru;
+    WS ws;
+} Cashe;
+
+typedef Cashe* CashePtr;
+
+int LRU_run(InvertedPageTablePtr invertedPageTable, AddressPtr address, CashePtr mStruct, StatisticsPtr stats);
 
 int WS_run(InvertedPageTablePtr *invertedPageTable, AddressPtr *address);
 
-int compare(int *a, int *b);
+int compare_Addresses(AddressPtr* address1, AddressPtr* address2);
 
 #endif

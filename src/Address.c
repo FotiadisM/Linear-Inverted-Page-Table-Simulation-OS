@@ -13,6 +13,8 @@ int Address_setInfo(AddressPtr address, char* info) {
 
     address->pageNumber = strtoul(hex, NULL, 16) / FRAME_SIZE;
 
+    printf("Adding page with pageNumber: %ld\n", address->pageNumber);
+
     if(!strcmp(operation, "W")) {
         address->dirty = true;
     }
@@ -33,5 +35,5 @@ int Address_equals(Address address1, Address address2) {
 }
 
 void Address_print(Address address) {
-    printf("pid: %ld, pageNumber: %8ld, operation: %d\n", address.pid, address.pageNumber, address.dirty);
+    printf("\tpid: %ld, pageNumber: %8ld, operation: %d\n", address.pid, address.pageNumber, address.dirty);
 }

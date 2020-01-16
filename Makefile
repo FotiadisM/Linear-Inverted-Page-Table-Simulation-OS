@@ -1,6 +1,6 @@
 CC = gcc
 CFLAGS = -g3 -Wall
-LDFLAGS = -lm
+LDFLAGS =
 
 BDIR = bin
 ODIR = build
@@ -24,10 +24,10 @@ $(BDIR)/$(EXECUTABLE): $(OBJ)
 .PHONY: clean run
 
 run:
-	./$(BDIR)/$(EXECUTABLE) -a LRU -f 12 -q 2 -m 6
+	./$(BDIR)/$(EXECUTABLE) -a LRU -f 4 -q 2 -m 6
 
 valgrind:
-	valgrind ./$(BDIR)/$(EXECUTABLE) -a LRU -f 100 -q 10 -m 10
+	valgrind --leak-check=full ./$(BDIR)/$(EXECUTABLE) -a LRU -f 4 -q 10 -m 10
 
 clean:
 	rm -f $(ODIR)/*.o

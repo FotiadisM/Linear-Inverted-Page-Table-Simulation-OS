@@ -11,7 +11,7 @@ int main(int argc, char* argv[]) {
     }
 
     char *algorithm = NULL;
-    int quantum = 0;
+    int quantity = 0;
     int frames = 0;
     int maxReferences = -1;
 
@@ -20,7 +20,7 @@ int main(int argc, char* argv[]) {
             frames = atoi(argv[++i]);
         }
         else if(!strcmp(argv[i], "-q")) {
-            quantum = atoi(argv[++i]);
+            quantity = atoi(argv[++i]);
         }
         else if(!strcmp(argv[i], "-m")) {
             maxReferences = atoi(argv[++i]);
@@ -35,7 +35,7 @@ int main(int argc, char* argv[]) {
         }
     }
 
-    if(Simulator_run(algorithm, frames, quantum, maxReferences) == -1) {
+    if(Simulator_run(algorithm, frames, quantity, maxReferences) == -1) {
         perror("Error occurred, program terminated");
         return -1;
     }

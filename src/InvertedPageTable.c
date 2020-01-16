@@ -20,6 +20,7 @@ AddressPtr *InvertedPageTable_getFreeFrame(InvertedPageTablePtr invertedPagetabl
     for(size_t i=0; i < invertedPagetable->size; i++) {
         if(invertedPagetable->table[i] == NULL) {
             return &invertedPagetable->table[i];
+
         }
     }
 
@@ -29,8 +30,19 @@ AddressPtr *InvertedPageTable_getFreeFrame(InvertedPageTablePtr invertedPagetabl
 void InvertedPageTable_print(InvertedPageTablePtr invertedPagetable) {
 
     for(int i=0; i < invertedPagetable->size; i++) {
-        if(invertedPagetable->table[i] != NULL) {
+        if(invertedPagetable->table[i] == NULL) {
+            printf("\tNULL\n");
+        }
+        else {
             Address_print(*(invertedPagetable->table[i]));
         }
     }
+}
+
+void Statistics_Init(StatisticsPtr stats) {
+    stats->reads = 0;
+    stats->writes = 0;
+    stats->pageFaults = 0;
+    stats->cachedPages = 0;
+    stats->pageRequests = 0;
 }

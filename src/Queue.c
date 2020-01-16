@@ -24,8 +24,8 @@ int Queue_Insert(QueuePtr queue, void *data) {
         return -1;
     }
 
-    memcpy(newNode->data, data, queue->dataSize);
     newNode->next = NULL;
+    memcpy(newNode->data, data, queue->dataSize);
 
     if(queue->sizeOfQueue) {
         queue->tail->next = newNode;
@@ -41,7 +41,7 @@ int Queue_Insert(QueuePtr queue, void *data) {
     return 1;
 }
 
-void Queue_Pop(QueuePtr queue, void* data) {
+void Queue_Pop(QueuePtr queue, void *data) {
 
     Queue_nodePtr tmpNode = NULL;
 
@@ -87,6 +87,17 @@ void Queue_Prioritize(QueuePtr queue, void *data, int (*function)()) {
         }
         slowPtr = fastPtr;
         fastPtr = fastPtr->next;
+    }
+}
+
+void Queue_Print(QueuePtr queue, void (*function)()) {
+
+    Queue_nodePtr tmpNode = NULL;
+
+    tmpNode = queue->head;
+    for(int i=0; i < queue->sizeOfQueue; i++) {
+        function(tmpNode->data, tmpNode->data);
+        tmpNode = tmpNode->next;
     }
 }
 
