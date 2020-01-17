@@ -2,7 +2,6 @@
 #include <string.h>
 
 #include "../include/Address.h"
-#include "../include/defines.h"
 
 int Address_setInfo(AddressPtr address, char* info) {
 
@@ -12,8 +11,6 @@ int Address_setInfo(AddressPtr address, char* info) {
     operation = strtok(NULL, "\n");
 
     address->pageNumber = strtoul(hex, NULL, 16) / FRAME_SIZE;
-
-    printf("Adding page with pageNumber: %ld\n", address->pageNumber);
 
     if(!strcmp(operation, "W")) {
         address->dirty = true;

@@ -21,13 +21,19 @@ $(ODIR)/%.o: $(SDIR)/%.c $(DEPS)
 $(BDIR)/$(EXECUTABLE): $(OBJ)
 	$(CC) $(CFLAGS) $^ -o $@ $(LDFLAGS)
 
-.PHONY: clean run
+.PHONY: clean lru ws valgrind-lru valgrind-ws
 
-run:
-	./$(BDIR)/$(EXECUTABLE) -a LRU -f 4 -q 2 -m 6
+lru:
+	./$(BDIR)/$(EXECUTABLE) -a LRU -f 20 -q 5 -m 100
 
-valgrind:
-	valgrind --leak-check=full ./$(BDIR)/$(EXECUTABLE) -a LRU -f 4 -q 10 -m 10
+ws:
+	./$(BDIR)/$(EXECUTABLE) -a WS -ws 10 -f 20 -q 5 -m 100
+
+valgrind-lru:
+	valgrind --leak-check=full ./$(BDIR)/$(EXECUTABLE) -a LRU -f 20 -q 5 -m 100
+
+valgrind-ws:
+	valgrind --leak-check=full ./$(BDIR)/$(EXECUTABLE) -a WS -ws 10 -f 20 -q 5 -m 100
 
 clean:
 	rm -f $(ODIR)/*.o

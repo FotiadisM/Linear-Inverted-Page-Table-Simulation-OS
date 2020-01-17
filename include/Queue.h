@@ -27,7 +27,11 @@ void Queue_Pop(QueuePtr queue, void *data);
 
 void Queue_Prioritize(QueuePtr queue, void *data, int (*function)());
 
+int Queue_Exist(QueuePtr queue, void *data, int (*function)());
+
 void Queue_Print(QueuePtr queue, void (*function)());
+
+int Queue_GetSize(QueuePtr queue);
 
 void Queue_Close(QueuePtr queue);
 

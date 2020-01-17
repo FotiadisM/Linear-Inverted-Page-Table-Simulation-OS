@@ -67,18 +67,11 @@ void Queue_Pop(QueuePtr queue, void *data) {
 
 void Queue_Prioritize(QueuePtr queue, void *data, int (*function)()) {
 
-    Queue_nodePtr fastPtr = NULL;
+    Queue_nodePtr fastPtr = queue->head;
     Queue_nodePtr slowPtr = NULL;
 
-    fastPtr = queue->head;
     for(int i=0; i < queue->sizeOfQueue; i++) {
-        if(fastPtr->data == NULL) {
-            printf("WHATUP/");
-        }
-
-        // printf("ad1: %p, ad2: %p\n", fastPtr->data, data);
         if(function(fastPtr->data, data)) {
-            printf("i: %d\n", i);
             if(fastPtr->next == NULL) {
                 return;
             }
@@ -99,6 +92,19 @@ void Queue_Prioritize(QueuePtr queue, void *data, int (*function)()) {
     }
 }
 
+int Queue_Exist(QueuePtr queue, void *data, int (*function)()) {
+
+    Queue_nodePtr tmpNode = queue->head;
+
+    for(int i=0; i < queue->sizeOfQueue; i++) {
+        if(function(tmpNode->data, data)) {
+            return 1;
+        }
+    }
+
+    return 0;
+}
+
 void Queue_Print(QueuePtr queue, void (*function)()) {
 
     Queue_nodePtr tmpNode = NULL;
@@ -108,6 +114,11 @@ void Queue_Print(QueuePtr queue, void (*function)()) {
         function(tmpNode->data, tmpNode->data);
         tmpNode = tmpNode->next;
     }
+}
+
+int Queue_GetSize(QueuePtr queue) {
+
+    return queue->sizeOfQueue;
 }
 
 void Queue_Close(QueuePtr queue) {

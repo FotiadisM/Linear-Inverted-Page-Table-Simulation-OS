@@ -3,7 +3,7 @@
 
 #include "../include/Simulator.h"
 
-int Simulator_run(char* algorithm, int frames, int quantity, int maxReferences) {
+int Simulator_run(char* algorithm, int frames, int quantity, int maxReferences, int maxWorkingSet) {
 
     int (*function)();
     int currReferences = 0, currQuantity = 0;
@@ -46,16 +46,13 @@ int Simulator_run(char* algorithm, int frames, int quantity, int maxReferences) 
     }
     Statistics_Init(stats);
 
-    if(!strcmp(algorithm, "LRU")) {
-        function = LRU_run;
-        if((mStruct->lru.queue = malloc(sizeof(Queue))) == NULL) {
-            perror("malloc failed");
-            return -1;
-        }
-        Queue_Init(mStruct->lru.queue, sizeof(AddressPtr)); // sizeof(AddressPtr *) == sizeof(AddressPtr)
+    if(!strcmp(algorithm, "LRU") || !strcmp(algorithm, "lru")) {
+        function = LRU_Run;
+        LRU_Init(mStruct);
     }
-    else if(!strcmp(algorithm, "WS")) {
-        function = WS_run;
+    else if(!strcmp(algorithm, "WS") || !strcmp(algorithm, "ws")) {
+        function = WS_Run;
+        WS_Init(mStruct, maxWorkingSet);
     }
     else {
         printf("Unknown replacment algorithm %s\n", algorithm);
@@ -64,10 +61,21 @@ int Simulator_run(char* algorithm, int frames, int quantity, int maxReferences) 
 
     while((address = Simulator_getAddress(filePtr1, filePtr2, &currReferences, maxReferences, &currQuantity, quantity, &toggleFiles)) != NULL) {
 
+        printf("Adding page with pageNumber: %ld\n", address->pageNumber);
+
         function(invertedPageTable, address, mStruct, stats);
+
         InvertedPageTable_print(invertedPageTable);
         printf("\n");
     }
+
+    printf("\t===================Stats==================\n");
+    printf("\tTotal Reads: %d\n", stats->reads);
+    printf("\tTotal Writes: %d\n", stats->writes);
+    printf("\tPage faults: %d\n", stats->pageFaults);
+    printf("\tCashed pages: %d\n", stats->cachedPages);
+    printf("\tTotal pages requests: %d\n", stats->pageRequests);
+
 
     fclose(filePtr1);
     fclose(filePtr2);
@@ -80,12 +88,11 @@ int Simulator_run(char* algorithm, int frames, int quantity, int maxReferences) 
     free(invertedPageTable->table);
     free(invertedPageTable);
 
-    if(!strcmp(algorithm, "LRU")) {
-        Queue_Close(mStruct->lru.queue);
-        free(mStruct->lru.queue);
+    if(!strcmp(algorithm, "LRU") || !strcmp(algorithm, "lru")) {
+        LRU_Close(mStruct);
     }
-    else if(!strcmp(algorithm, "WS")) {
-
+    else if(!strcmp(algorithm, "WS") || !strcmp(algorithm, "ws")) {
+        WS_Close(mStruct);
     }
     free(mStruct);
     free(stats);

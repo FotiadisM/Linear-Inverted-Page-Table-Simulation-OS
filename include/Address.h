@@ -4,6 +4,8 @@
 #include <stdio.h>
 #include <stdbool.h>
 
+#include "../include/defines.h"
+
 typedef struct Address {
     size_t pid;
     size_t pageNumber;
