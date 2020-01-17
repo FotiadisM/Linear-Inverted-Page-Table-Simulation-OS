@@ -32,7 +32,7 @@ int LRU_run(InvertedPageTablePtr invertedPageTable, AddressPtr address, CashePtr
     // printf("%p, %p, %p, %ld\n", tmpAddress, *tmpAddress, tAddress, tAddress->pageNumber);
 
 
-    // free(mAddress);
+    // free(mAddress);                          
     stats->pageRequests++;
 
     if(address->dirty)
@@ -76,10 +76,11 @@ int WS_run(InvertedPageTablePtr *invertedPageTable, AddressPtr *address) {
 
 int compare_Addresses(AddressPtr* address1, AddressPtr* address2) {
 
-    // if(*address1 == *address2) {
-    //     printf("ela dike mou");
-    //     return 1;
-    // }
+    printf("EEELLAAA\tad1: %p, ad2: %p\n", *address1, *address2);
+
+    if(*address1 == *address2) {
+        return 1;
+    }
 
     return 0;
 }

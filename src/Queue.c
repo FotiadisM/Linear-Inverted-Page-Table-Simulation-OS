@@ -72,8 +72,17 @@ void Queue_Prioritize(QueuePtr queue, void *data, int (*function)()) {
 
     fastPtr = queue->head;
     for(int i=0; i < queue->sizeOfQueue; i++) {
+        if(fastPtr->data == NULL) {
+            printf("WHATUP/");
+        }
+
+        // printf("ad1: %p, ad2: %p\n", fastPtr->data, data);
         if(function(fastPtr->data, data)) {
-            if(i) {
+            printf("i: %d\n", i);
+            if(fastPtr->next == NULL) {
+                return;
+            }
+            else if(i) {
                 slowPtr->next = fastPtr->next;
             }
             else {

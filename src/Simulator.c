@@ -112,6 +112,8 @@ AddressPtr Simulator_getAddress(FILE *filePtr1, FILE *filePtr2, int *currReferen
 
     if(*togglefiles) {
         if(getline(&line, &len, filePtr2) == -1) {
+            free(address);
+            free(line);
             return NULL;
         }
         if(++(*currQuantity) == quantity) {
@@ -122,6 +124,8 @@ AddressPtr Simulator_getAddress(FILE *filePtr1, FILE *filePtr2, int *currReferen
     }
     else {
         if(getline(&line, &len, filePtr1) == -1) {
+            free(address);
+            free(line);
             return NULL;
         }
         if(++(*currQuantity) == quantity) {
